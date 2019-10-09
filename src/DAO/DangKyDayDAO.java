@@ -171,5 +171,28 @@ public class DangKyDayDAO {
         }
         return dkd;
     }
+ public DangKyDay themmoi(DangKyDay dkd) {
+        PreparedStatement ps = null;
+        if (DBConnect.open()) {
+            try {
+                ps = DBConnect.con.prepareStatement("DELETE FROM DANGKYDAY WHERE MAGV =? AND MALHP=? AND HOCKY=? AND NAMHOC=? ");
+                ps.setString(1, dkd.getMagv());
+                ps.setString(2, dkd.getMalhp());
+                ps.setString(3, dkd.getHocky());
+                ps.setString(4, dkd.getNamhoc());
+                int row = ps.executeUpdate();
+                if (row < 1) {
+                    dkd = null;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DangKyHocDAO.class.getName()).log(Level.SEVERE, null, ex);
+                dkd = null;
+            } finally {
+                DBConnect.close();
+            }
+        }
+        return dkd;
+    }
+
 
 }
